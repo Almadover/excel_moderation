@@ -27,16 +27,16 @@ def upload_file():
         # Найдем индекс столбца review_moderation_result (по первой строке)
         header = [cell.value for cell in next(ws.iter_rows(max_row=1))]
         try:
-            col_idx = header.index('review_moderation_result') + 1  # Нумерация с 1
+            col_idx = header.index('Ответ') + 1  # Нумерация с 1
         except ValueError:
-            return "Столбец 'review_moderation_result' не найден"
+            return "Столбец 'Ответ' не найден"
 
         # Проходим по строкам и заменяем значения
         for row in ws.iter_rows(min_row=2, min_col=col_idx, max_col=col_idx):
             cell = row[0]
-            if cell.value == 'Позитивный':
+            if cell.value == 'Можно публиковать':
                 cell.value = 'ok'
-            elif cell.value == 'Негативный':
+            elif cell.value == 'Нельзя публиковать':
                 cell.value = 'не ok'
 
         # Преобразуем данные в формат HTML
@@ -49,7 +49,7 @@ def upload_file():
             row_html = ''
             for cell in row:
                 # Если это столбец с 'input_productid', сделаем ссылку
-                if header[cell.column - 1] == 'input_productid' and cell.value:
+                if header[cell.column - 1] == 'id Товара' and cell.value:
                     link = f'https://www.aliexpress.com/item/{cell.value}.html'
                     cell_value = f'<a href="{link}" target="_blank">{cell.value}</a>'
                 else:
