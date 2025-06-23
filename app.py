@@ -66,7 +66,7 @@ def upload_file():
             row_html = ''
             for cell in row:
                 # Если это столбец с 'id Товара', делаем ссылку
-                if header[cell.column - 1] == 'id Товара' and cell.value:
+                if header[cell.column - 1] == 'ID товара' and cell.value:
                     link = f'https://www.aliexpress.com/item/{cell.value}.html'
                     cell_value = f'<a href="{link}" target="_blank">{cell.value}</a>'
                 else:
